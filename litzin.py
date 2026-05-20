@@ -1,22 +1,22 @@
 import streamlit as st
 from playwright.sync_api import sync_playwright
-import os
-
-# Force Playwright to install the Chromium binary on the cloud server
-os.system("playwright install chromium")
-os.system("playwright install-deps chromium")
+import re
 
 def run_scraper(url):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
         page.goto(url)
-        all_text = page.inner_text('body')
+        todos_os_eventos = page.locator('a').all_inner_texts() 
         browser.close()
-        return all_text
+        return todos_os_eventos
 
-st.title("Streamlit + Playwright Scraper")
+st.title("Digital College - Eventos Data Analytics")
+result = run_scraper('https://www.sympla.com.br/produtor/digitalcollegebr')
 
-if st.button("Scrape"):
-    result = run_scraper('https://www.sympla.com.br/produtor/digitalcollegebr')
-    st.write(f"Page Title: {result}")
+busca = re.compile(r"dados|python|analista|análise|data|analysis|analyst", re.IGNORECASE)
+
+for resultados in result:
+    if busca.search(resultados):
+        st.write(f"{resultados}")
+    
