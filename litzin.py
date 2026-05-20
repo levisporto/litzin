@@ -1,5 +1,10 @@
 import streamlit as st
 from playwright.sync_api import sync_playwright
+import os
+
+# Force Playwright to install the Chromium binary on the cloud server
+os.system("playwright install chromium")
+os.system("playwright install-deps chromium")
 
 def run_scraper(url):
     with sync_playwright() as p:
