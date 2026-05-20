@@ -15,7 +15,7 @@ with sync_playwright() as p:
         busca = re.compile(r"dados|python|analista|análise|data|analysis|analyst", re.IGNORECASE)
         evento_list = []
         link_list = []
-
+        image_list = "https://images.sympla.com.br/69f27ae454bd2-xs.png"
         for resultados in todos_os_eventos:
             if busca.search(resultados):
                 evento_list.append(resultados)
@@ -25,11 +25,12 @@ with sync_playwright() as p:
             if busca.search(resultados):
                 link_list.append(resultados)
             
-        for evento, link in zip(evento_list, link_list):
+        for evento, link in zip(evento_list, link_list, image_list):
+            st.image(image_list)    
             st.subheader(f"📅 {evento}")
             st.write(f"Link: {link}")
             st.write("---") # Optional: adds a line between results
-                
+           
         
         
         browser.close()
