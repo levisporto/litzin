@@ -1,6 +1,10 @@
 import streamlit as st
 from playwright.sync_api import sync_playwright
 import re
+import os
+
+os.system('playwright install')
+os.system('playwright install-deps')
 
 st.title("Digital College - Eventos Data Analytics")
 st.write('por Levi S. Porto :)')
